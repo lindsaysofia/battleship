@@ -1,16 +1,16 @@
 const Ship = (length) => {
-  const spotsHit = Array(length).fill(0);
+  const positionsHit = Array(length).fill(0);
 
-  const hit = (spot) => {
-    if (spot >= 0 && spot < length && !spotsHit[spot]) {
-      spotsHit[spot] = 1;
+  const hit = (position) => {
+    if (position >= 0 && position < length && !positionsHit[position]) {
+      positionsHit[position] = 1;
       return true;
     }
     return false;
   };
 
   const isSunk = () => {
-    return spotsHit.reduce((sum, current) => sum + current, 0) === length;
+    return positionsHit.reduce((sum, current) => sum + current, 0) === length;
   };
 
   return {
