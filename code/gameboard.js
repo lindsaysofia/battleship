@@ -3,7 +3,7 @@ const Ship = require('./ship');
 
 const Gameboard = () => {
   const gameboardSize = 10;
-  const positions = Array(10).fill(
+  const positions = Array.from({ length: 10 }, () =>
     Array.from({ length: 10 }, () => ({ isHit: false }))
   );
 
@@ -73,7 +73,14 @@ const Gameboard = () => {
   };
 
   const allShipsSunk = () => {
-
+    for (let x = 0; x < gameboardSize; x++) {
+      for (let y = 0; y < gameboardSize; y++) {
+        if (positions[x][y].ship && !positions[x][y].ship.isSunk()) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   return {

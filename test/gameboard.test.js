@@ -69,4 +69,17 @@ test('shipsSunk: ships have not been sunk returns false', () => {
   expect(gameboard.allShipsSunk()).toBeFalsy();
 });
 
-
+test('shipsSunk: all ships sunk returns true', () => {
+  gameboard.receiveAttack(1, 0);
+  gameboard.receiveAttack(2, 0);
+  gameboard.receiveAttack(2, 1);
+  gameboard.receiveAttack(2, 2);
+  gameboard.receiveAttack(2, 3);
+  gameboard.receiveAttack(2, 4);
+  gameboard.receiveAttack(2, 5);
+  gameboard.receiveAttack(5, 6);
+  gameboard.receiveAttack(6, 6);
+  gameboard.receiveAttack(7, 6);
+  gameboard.receiveAttack(8, 6);
+  expect(gameboard.allShipsSunk()).toBeTruthy();
+});
