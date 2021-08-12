@@ -3,7 +3,9 @@ const Ship = require('./ship');
 
 const Gameboard = () => {
   const gameboardSize = 10;
-  const positions = Array(10).fill(Array.from({length: 10}, () => ({hit: false})));
+  const positions = Array(10).fill(
+    Array.from({ length: 10 }, () => ({ isHit: false }))
+  );
 
   const isValidShipPlacement = (xStart, yStart, xEnd, yEnd) => {
     // if ship is outside gameboard
@@ -40,16 +42,44 @@ const Gameboard = () => {
       return false;
     }
     const newShip = Ship(shipLength);
+    let shipPosition = 0;
     for (let x = xStart; x < xEnd; x++) {
       for (let y = yStart; y < yEnd; y++) {
         positions[x][y].ship = newShip;
+        positions[x][y].shipPosition = shipPosition;
+        shipPosition++;
       }
     }
     return true;
   };
 
+  const receiveAttack = (x, y) => {
+    if (
+      x < 0 ||
+      y < 0 ||
+      x >= gameboardSize ||
+      y >= gameboardSize ||
+      positions[x][y].isHit
+    ) {
+      return false;
+    }
+    if (positions[x][y].ship) {
+      positions[x][y].ship.hit(positions[x][y].shipPosition);
+      positions[x][y].isHit = true;
+      return true;
+    }
+    positions[x][y].isHit = true;
+    return false;
+  };
+
+  const allShipsSunk = () => {
+
+  };
+
   return {
     placeShip,
+    receiveAttack,
+    allShipsSunk,
   };
 };
 
