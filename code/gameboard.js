@@ -83,10 +83,15 @@ const Gameboard = () => {
     return true;
   };
 
+  const getPositions = () => {
+    return positions;
+  };
+
   return {
     placeShip,
     receiveAttack,
     allShipsSunk,
+    getPositions,
   };
 };
 
