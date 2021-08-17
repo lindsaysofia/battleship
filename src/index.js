@@ -8,14 +8,14 @@ const gameboardSize = 10;
 let isPlayerTurn = true;
 let isPlayerSunk = false;
 let isComputerSunk = false;
-let player = Player('Linda');
+let player = Player('Player');
 let computer = Computer();
 
 function initiateGame() {
   isPlayerTurn = true;
   isPlayerSunk = false;
   isComputerSunk = false;
-  player = Player('Linda');
+  player = Player('Player');
   DOMLogic.createPlayerGameboard(gameboardSize);
   computer = Computer();
   DOMLogic.createComputerGameboard(gameboardSize);

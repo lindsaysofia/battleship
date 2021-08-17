@@ -1,6 +1,37 @@
+:root {
+  --color-blue: #389F91;
+  --color-red: #E8373A;
+  --color-navy: #031627;
+  --color-white: #FDFFFC;
+}
+
+body {
+  display: grid;
+  grid-template-rows: max-content max-content 1fr;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  background-color: var(--color-white);
+  color: var(--color-navy);
+}
+
+.game {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 2em;
+}
+
+.player_gameboard,
+.computer_gameboard {
+  height: 400px;
+  width: 400px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
 .position {
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  border: 1px solid green;
+  border: 1px solid var(--color-navy);
 }
