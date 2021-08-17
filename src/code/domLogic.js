@@ -1,4 +1,4 @@
-const DOMLogic = () => {
+const DOMLogic = (function () {
   const playerGameboard = document.querySelector('.player_gameboard');
   const computerGameboard = document.querySelector('.computer_gameboard');
   const createPlayerGameboard = (size) => {
@@ -28,6 +28,6 @@ const DOMLogic = () => {
     createPlayerGameboard,
     createComputerGameboard,
   }
-};
+})();
 
-module.exports = DOMLogic;
+export default DOMLogic;

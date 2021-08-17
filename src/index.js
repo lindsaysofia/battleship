@@ -1,7 +1,8 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import Player from './code/player';
 import Computer from './code/computer';
 import DOMLogic from './code/domLogic';
+import './style.css';
 const gameboardSize = 10;
 
 let isPlayerTurn = true;

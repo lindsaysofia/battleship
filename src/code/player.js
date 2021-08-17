@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import Gameboard from './gameboard';
 
 const Player = (name) => {
@@ -35,4 +34,4 @@ const Player = (name) => {
   };
 };
 
-module.exports = Player;
+export default Player;

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import Ship from './ship';
 
 const Gameboard = () => {
@@ -95,5 +94,4 @@ const Gameboard = () => {
   };
 };
 
-// eslint-disable-next-line no-undef
-module.exports = Gameboard;
+export default Gameboard;

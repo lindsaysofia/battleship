@@ -19,5 +19,4 @@ const Ship = (length) => {
   };
 };
 
-// eslint-disable-next-line no-undef
-module.exports = Ship;
+export default Ship;

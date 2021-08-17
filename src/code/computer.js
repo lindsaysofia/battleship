@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import Player from './player';
 
 const Computer = () => {
@@ -30,4 +29,4 @@ const Computer = () => {
   };
 };
 
-module.exports = Computer;
+export default Computer;
