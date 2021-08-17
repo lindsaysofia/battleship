@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const Player = require('./player');
+import Player from './player';
 
 const Computer = () => {
   const enemyPositionsAttacked = [];

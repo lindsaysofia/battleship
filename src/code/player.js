@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const Gameboard = require('./gameboard');
+import Gameboard from './gameboard';
 
 const Player = (name) => {
   const enemyPositionsAttacked = [];
