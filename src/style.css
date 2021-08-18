@@ -35,3 +35,20 @@ body {
 .position {
   border: 1px solid var(--color-navy);
 }
+
+.position.ship {
+  border: 1px solid var(--color-red);
+}
+
+.position:hover {
+  background-color: var(--color-navy);
+  cursor: pointer;
+}
+
+.position.hit {
+  background-color: var(--color-red);
+}
+
+.position.miss {
+  background-color: var(--color-blue);
+}
