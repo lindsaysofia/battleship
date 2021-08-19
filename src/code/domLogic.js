@@ -1,7 +1,12 @@
 const DOMLogic = (function () {
   const playerGameboard = document.querySelector('.player_gameboard');
   const computerGameboard = document.querySelector('.computer_gameboard');
-  const renderPlayerGameboard = (positions) => {
+  let playerInGame;
+  let computerInGame;
+
+  const renderPlayerGameboard = (player) => {
+    playerInGame = player;
+    let positions = player.getGameboard().getPositions();
     for (let y = 0; y < positions.length; y++) {
       for (let x = 0; x < positions.length; x++) {
         let div = document.createElement('div');
@@ -23,7 +28,9 @@ const DOMLogic = (function () {
     }
   };
 
-  const renderComputerGameboard = (positions) => {
+  const renderComputerGameboard = (computer) => {
+    computerInGame = computer;
+    let positions = computer.getGameboard().getPositions();
     for (let y = 0; y < positions.length; y++) {
       for (let x = 0; x < positions.length; x++) {
         let div = document.createElement('div');
@@ -46,17 +53,54 @@ const DOMLogic = (function () {
     computerGameboard.classList.toggle('active');
   };
 
-  const handleClick = (e) => {
-    // if (!e.target.classList.contains('position') || !isPlayerTurn) return;
+  const isGameOver = () => {
+    if (playerInGame.getGameboard().allShipsSunk() || computerInGame.getGameboard().allShipsSunk()) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleGameEnd = () => {
+    computerGameboard.removeEventListener('click', handlePlayerAttack);
+  }
+
+  const handleComputerAttack = () => {
+
+    console.log(computerInGame.attack);
+    playerInGame.getGameboard().receiveAttack(x, y);
+    renderPlayerGameboard(playerInGame);
+    renderComputerGameboard(playerInGame);
+    if (isGameOver()) {
+      handleGameEnd();
+    } else {
+      toggleActiveComputerGameboard();
+    }
+  }
+
+  const handlePlayerAttack = (e) => {
+    let parentClassList = e.target.parentNode.classList;
+    if (!parentClassList.contains('active')) {
+      return;
+    }
     let x = e.target.dataset.x;
     let y = e.target.dataset.y;
-    let parentClass = e.target.parentNode.classList[0]
-    console.log(x, y, parentClass);
+    
+    if (playerInGame.attack(x, y)) {
+      computerInGame.getGameboard().receiveAttack(x, y);
+      toggleActiveComputerGameboard();
+      renderPlayerGameboard(playerInGame);
+      renderComputerGameboard(playerInGame);
+      if (isGameOver()) {
+        handleGameEnd();
+      } else {
+        handleComputerAttack();
+      }
+    }
   };
   return {
     renderPlayerGameboard,
     renderComputerGameboard,
-    handleClick,
+    handlePlayerAttack,
     toggleActiveComputerGameboard,
   }
 })();

@@ -1,8 +1,9 @@
 :root {
   --color-blue: #389F91;
   --color-red: #E8373A;
+  --color-light-red: #f28d8f;
   --color-navy: #031627;
-  --color-white: #FDFFFC;
+  --color-white: whitesmoke;
 }
 
 body {
@@ -15,6 +16,21 @@ body {
   box-sizing: border-box;
   background-color: var(--color-navy);
   color: var(--color-white);
+  font-family: 'Fredoka One', cursive;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
 }
 
 .game {
@@ -37,8 +53,7 @@ body {
 }
 
 .player_gameboard .position.ship {
-  border: 3px solid var(--color-red);
-  box-shadow: 1px 1px 1px 1px var(--color-red);
+  background-color: var(--color-light-red);
 }
 
 .computer_gameboard .position:hover {
