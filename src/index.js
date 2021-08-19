@@ -3,7 +3,6 @@ import Player from './code/player';
 import Computer from './code/computer';
 import DOMLogic from './code/domLogic';
 import './style.css';
-const gameboardSize = 10;
 
 let isPlayerTurn;
 let isPlayerSunk;
@@ -16,19 +15,34 @@ function initiateGame() {
   isPlayerSunk = false;
   isComputerSunk = false;
   player = Player('Player');
-  DOMLogic.createPlayerGameboard(gameboardSize);
+  player.getGameboard().placeShip(0, 0, 4, 'horizontal');
+  player.getGameboard().placeShip(0, 2, 3, 'horizontal');
+  player.getGameboard().placeShip(4, 2, 3, 'horizontal');
+  player.getGameboard().placeShip(0, 4, 2, 'horizontal');
+  player.getGameboard().placeShip(3, 4, 2, 'horizontal');
+  player.getGameboard().placeShip(6, 4, 2, 'horizontal');
+  player.getGameboard().placeShip(0, 6, 1, 'horizontal');
+  player.getGameboard().placeShip(2, 6, 1, 'horizontal');
+  player.getGameboard().placeShip(4, 6, 1, 'horizontal');
+  player.getGameboard().placeShip(6, 6, 1, 'horizontal');
+  DOMLogic.renderPlayerGameboard(player.getGameboard().getPositions());
   computer = Computer();
-  DOMLogic.createComputerGameboard(gameboardSize);
+  computer.getGameboard().placeShip(0, 0, 4, 'horizontal');
+  computer.getGameboard().placeShip(0, 2, 3, 'horizontal');
+  computer.getGameboard().placeShip(4, 2, 3, 'horizontal');
+  computer.getGameboard().placeShip(0, 4, 2, 'horizontal');
+  computer.getGameboard().placeShip(3, 4, 2, 'horizontal');
+  computer.getGameboard().placeShip(6, 4, 2, 'horizontal');
+  computer.getGameboard().placeShip(0, 6, 1, 'horizontal');
+  computer.getGameboard().placeShip(2, 6, 1, 'horizontal');
+  computer.getGameboard().placeShip(4, 6, 1, 'horizontal');
+  computer.getGameboard().placeShip(6, 6, 1, 'horizontal');
+  DOMLogic.renderComputerGameboard(computer.getGameboard().getPositions());
+
+  DOMLogic.toggleActiveComputerGameboard();
 }
 
 initiateGame();
 
-document.addEventListener('click', handleClick);
+document.querySelector('.computer_gameboard').addEventListener('click', DOMLogic.handleClick);
 
-function handleClick(e) {
-  if (!e.target.classList.contains('position') && !isPlayerTurn) return;
-  let x = e.target.dataset.x;
-  let y = e.target.dataset.y;
-  let parentClass = e.target.parentNode.classList[0]
-  console.log(x, y, parentClass);
-}

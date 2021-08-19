@@ -13,8 +13,8 @@ body {
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
-  background-color: var(--color-white);
-  color: var(--color-navy);
+  background-color: var(--color-navy);
+  color: var(--color-white);
 }
 
 .game {
@@ -33,15 +33,16 @@ body {
 }
 
 .position {
-  border: 1px solid var(--color-navy);
+  border: 1px solid var(--color-white);
 }
 
-.position.ship {
-  border: 1px solid var(--color-red);
+.player_gameboard .position.ship {
+  border: 3px solid var(--color-red);
+  box-shadow: 1px 1px 1px 1px var(--color-red);
 }
 
-.position:hover {
-  background-color: var(--color-navy);
+.computer_gameboard .position:hover {
+  background-color: var(--color-white);
   cursor: pointer;
 }
 
