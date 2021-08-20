@@ -1,14 +1,30 @@
-import Player from './player';
+import Gameboard from './gameboard';
 
 const Computer = () => {
   const enemyPositionsAttacked = [];
 
   const gameboardSize = 10;
 
-  const { getName, getGameboard, isValidAttack } = Player('Computer');
+  const gameboard = Gameboard();
+
+  const name = 'Computer';
+
+  const getName = () => name;
+
+  const getGameboard = () => gameboard;
+
+  const isValidAttack = (x, y) => {
+    for (let i = 0; i < enemyPositionsAttacked.length; i++) {
+      let enemyPositions = enemyPositionsAttacked[i];
+      if (enemyPositions.x === x && enemyPositions.y === y) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const getRandomCoordinate = () => {
-    return Math.floor(Math.random * gameboardSize);
+    return Math.floor(Math.random() * gameboardSize);
   };
 
   const attack = () => {

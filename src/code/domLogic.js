@@ -5,6 +5,7 @@ const DOMLogic = (function () {
   let computerInGame;
 
   const renderPlayerGameboard = (player) => {
+    playerGameboard.innerHTML = '';
     playerInGame = player;
     let positions = player.getGameboard().getPositions();
     for (let y = 0; y < positions.length; y++) {
@@ -29,6 +30,7 @@ const DOMLogic = (function () {
   };
 
   const renderComputerGameboard = (computer) => {
+    computerGameboard.innerHTML = '';
     computerInGame = computer;
     let positions = computer.getGameboard().getPositions();
     for (let y = 0; y < positions.length; y++) {
@@ -65,11 +67,10 @@ const DOMLogic = (function () {
   }
 
   const handleComputerAttack = () => {
-
-    console.log(computerInGame.attack);
+    const { x, y } = computerInGame.attack();
     playerInGame.getGameboard().receiveAttack(x, y);
     renderPlayerGameboard(playerInGame);
-    renderComputerGameboard(playerInGame);
+    renderComputerGameboard(computerInGame);
     if (isGameOver()) {
       handleGameEnd();
     } else {
@@ -89,7 +90,7 @@ const DOMLogic = (function () {
       computerInGame.getGameboard().receiveAttack(x, y);
       toggleActiveComputerGameboard();
       renderPlayerGameboard(playerInGame);
-      renderComputerGameboard(playerInGame);
+      renderComputerGameboard(computerInGame);
       if (isGameOver()) {
         handleGameEnd();
       } else {
