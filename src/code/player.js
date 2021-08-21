@@ -3,10 +3,33 @@ import Gameboard from './gameboard';
 const Player = (name) => {
   const enemyPositionsAttacked = [];
   const gameboard = Gameboard();
+  const gameboardSize = 10;
 
   const getName = () => name;
 
   const getGameboard = () => gameboard;
+
+  const getRandomCoordinate = () => {
+    return Math.floor(Math.random() * gameboardSize);
+  };
+
+  const getRandomOrientation = () => {
+    let orientations = ['horizontal', 'vertical'];
+    return orientations[Math.floor(Math.random() * 2)];
+  }
+
+  const placeShipRandomly = (shipLength) =>{
+    let x = getRandomCoordinate();
+    let y = getRandomCoordinate();
+    let orientation = getRandomOrientation();
+    let isSuccessfulShipPlacement = getGameboard().placeShip(x, y, shipLength, orientation);
+    while(!isSuccessfulShipPlacement) {
+      x = getRandomCoordinate();
+      y = getRandomCoordinate();
+      orientation = getRandomOrientation();
+      isSuccessfulShipPlacement = getGameboard().placeShip(x, y, shipLength, orientation);
+    }
+  }
 
   const isValidAttack = (x, y) => {
     for (let i = 0; i < enemyPositionsAttacked.length; i++) {
@@ -31,6 +54,7 @@ const Player = (name) => {
     getGameboard,
     isValidAttack,
     attack,
+    placeShipRandomly
   };
 };
 

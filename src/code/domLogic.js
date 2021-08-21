@@ -1,6 +1,7 @@
 const DOMLogic = (function () {
   const playerGameboard = document.querySelector('.player_gameboard');
   const computerGameboard = document.querySelector('.computer_gameboard');
+  let gameStatus = document.querySelector('.game-status');
   let playerInGame;
   let computerInGame;
 
@@ -63,6 +64,7 @@ const DOMLogic = (function () {
 
   const handleGameEnd = () => {
     computerGameboard.removeEventListener('click', handlePlayerAttack);
+    gameStatus.textContent = (playerInGame.getGameboard().allShipsSunk()) ? 'Computer Won!' : 'Player Won!';
   }
 
   const handleComputerAttack = () => {
@@ -78,6 +80,7 @@ const DOMLogic = (function () {
   }
 
   const handlePlayerAttack = (e) => {
+    gameStatus.textContent = '...Battle In Progress...';
     let parentClassList = e.target.parentNode.classList;
     if (!parentClassList.contains('active')) {
       return;

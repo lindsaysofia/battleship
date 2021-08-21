@@ -27,6 +27,24 @@ const Computer = () => {
     return Math.floor(Math.random() * gameboardSize);
   };
 
+  const getRandomOrientation = () => {
+    let orientations = ['horizontal', 'vertical'];
+    return orientations[Math.floor(Math.random() * 2)];
+  }
+
+  const placeShipRandomly = (shipLength) =>{
+    let x = getRandomCoordinate();
+    let y = getRandomCoordinate();
+    let orientation = getRandomOrientation();
+    let isSuccessfulShipPlacement = getGameboard().placeShip(x, y, shipLength, orientation);
+    while(!isSuccessfulShipPlacement) {
+      x = getRandomCoordinate();
+      y = getRandomCoordinate();
+      orientation = getRandomOrientation();
+      isSuccessfulShipPlacement = getGameboard().placeShip(x, y, shipLength, orientation);
+    }
+  }
+
   const attack = () => {
     let x = getRandomCoordinate();
     let y = getRandomCoordinate();
@@ -42,6 +60,7 @@ const Computer = () => {
     getName,
     getGameboard,
     attack,
+    placeShipRandomly,
   };
 };
 
