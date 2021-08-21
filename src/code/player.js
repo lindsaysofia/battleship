@@ -16,20 +16,30 @@ const Player = (name) => {
   const getRandomOrientation = () => {
     let orientations = ['horizontal', 'vertical'];
     return orientations[Math.floor(Math.random() * 2)];
-  }
+  };
 
-  const placeShipRandomly = (shipLength) =>{
+  const placeShipRandomly = (shipLength) => {
     let x = getRandomCoordinate();
     let y = getRandomCoordinate();
     let orientation = getRandomOrientation();
-    let isSuccessfulShipPlacement = getGameboard().placeShip(x, y, shipLength, orientation);
-    while(!isSuccessfulShipPlacement) {
+    let isSuccessfulShipPlacement = getGameboard().placeShip(
+      x,
+      y,
+      shipLength,
+      orientation
+    );
+    while (!isSuccessfulShipPlacement) {
       x = getRandomCoordinate();
       y = getRandomCoordinate();
       orientation = getRandomOrientation();
-      isSuccessfulShipPlacement = getGameboard().placeShip(x, y, shipLength, orientation);
+      isSuccessfulShipPlacement = getGameboard().placeShip(
+        x,
+        y,
+        shipLength,
+        orientation
+      );
     }
-  }
+  };
 
   const isValidAttack = (x, y) => {
     for (let i = 0; i < enemyPositionsAttacked.length; i++) {
@@ -54,7 +64,7 @@ const Player = (name) => {
     getGameboard,
     isValidAttack,
     attack,
-    placeShipRandomly
+    placeShipRandomly,
   };
 };
 

@@ -56,7 +56,10 @@ const DOMLogic = (function () {
   };
 
   const isGameOver = () => {
-    if (playerInGame.getGameboard().allShipsSunk() || computerInGame.getGameboard().allShipsSunk()) {
+    if (
+      playerInGame.getGameboard().allShipsSunk() ||
+      computerInGame.getGameboard().allShipsSunk()
+    ) {
       return true;
     }
     return false;
@@ -64,8 +67,10 @@ const DOMLogic = (function () {
 
   const handleGameEnd = () => {
     computerGameboard.removeEventListener('click', handlePlayerAttack);
-    gameStatus.textContent = (playerInGame.getGameboard().allShipsSunk()) ? 'Computer Won!' : 'Player Won!';
-  }
+    gameStatus.textContent = playerInGame.getGameboard().allShipsSunk()
+      ? 'Computer Won!'
+      : 'Player Won!';
+  };
 
   const handleComputerAttack = () => {
     const { x, y } = computerInGame.attack();
@@ -77,7 +82,7 @@ const DOMLogic = (function () {
     } else {
       toggleActiveComputerGameboard();
     }
-  }
+  };
 
   const handlePlayerAttack = (e) => {
     gameStatus.textContent = '...Battle In Progress...';
@@ -87,7 +92,7 @@ const DOMLogic = (function () {
     }
     let x = e.target.dataset.x;
     let y = e.target.dataset.y;
-    
+
     if (playerInGame.attack(x, y)) {
       computerInGame.getGameboard().receiveAttack(x, y);
       toggleActiveComputerGameboard();
@@ -105,7 +110,7 @@ const DOMLogic = (function () {
     renderComputerGameboard,
     handlePlayerAttack,
     toggleActiveComputerGameboard,
-  }
+  };
 })();
 
 export default DOMLogic;

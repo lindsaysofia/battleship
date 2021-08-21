@@ -38,5 +38,6 @@ function initiateGame() {
 
 initiateGame();
 
-document.querySelector('.computer_gameboard').addEventListener('click', DOMLogic.handlePlayerAttack);
-
+document
+  .querySelector('.computer_gameboard')
+  .addEventListener('click', DOMLogic.handlePlayerAttack);
