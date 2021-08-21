@@ -20,8 +20,7 @@ const DOMLogic = (function () {
           } else {
             div.classList.add('miss');
           }
-        }
-        if (positions[x][y].ship) {
+        } else if (positions[x][y].ship) {
           div.classList.add('ship');
         }
         playerGameboard.appendChild(div);

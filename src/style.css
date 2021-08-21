@@ -61,10 +61,12 @@ h3 {
   cursor: pointer;
 }
 
-.position.hit {
+.position.hit,
+.computer_gameboard .position.hit:hover {
   background-color: var(--color-red);
 }
 
-.position.miss {
+.position.miss,
+.computer_gameboard .position.miss:hover {
   background-color: var(--color-blue);
 }
