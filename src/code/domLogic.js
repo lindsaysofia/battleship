@@ -1,9 +1,24 @@
 const DOMLogic = (function () {
   const playerGameboard = document.querySelector('.player_gameboard');
   const computerGameboard = document.querySelector('.computer_gameboard');
+  const shipsContainer = document.querySelector('.ships-container');
   let gameStatus = document.querySelector('.game-status');
   let playerInGame;
   let computerInGame;
+
+  const populateShips = () => {
+    const shipLengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+    shipLengths.forEach((shipLength) => {
+        let ship = document.createElement('div');
+        for (let i = 0; i < shipLength; i++) {
+          let shipPosition = document.createElement('div');
+          shipPosition.classList.add('position', 'ship');
+          ship.appendChild(shipPosition);
+          ship.draggable = true;
+        }
+        shipsContainer.appendChild(ship);
+    });
+  };
 
   const renderPlayerGameboard = (player) => {
     playerGameboard.innerHTML = '';
@@ -110,6 +125,7 @@ const DOMLogic = (function () {
     renderComputerGameboard,
     handlePlayerAttack,
     toggleActiveComputerGameboard,
+    populateShips,
   };
 })();
 

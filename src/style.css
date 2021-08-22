@@ -34,9 +34,7 @@ h3 {
 }
 
 .game {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  gap: 2em;
+  display: flex;
 }
 
 .player_gameboard,
@@ -50,9 +48,11 @@ h3 {
 
 .position {
   border: 1px solid var(--color-white);
+  height: 40px;
+  width: 40px;
 }
 
-.player_gameboard .position.ship {
+.position.ship {
   background-color: var(--color-light-red);
 }
 
@@ -69,4 +69,19 @@ h3 {
 .position.miss,
 .computer_gameboard .position.miss:hover {
   background-color: var(--color-blue);
+}
+
+.hidden {
+  display: none;
+}
+
+.ships-container {
+  height: 400px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ships-container .position {
+  display: inline-block;
 }
