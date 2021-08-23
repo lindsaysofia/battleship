@@ -10,6 +10,20 @@ let computer;
 function initiateGame() {
   DOMLogic.populateShips();
   player = Player('Player');
+  DOMLogic.renderPlayerGameboard(player);
+  let draggableShips = document.querySelectorAll('.ship_drag');
+  let playerGameboardPositions = document.querySelectorAll('.player_gameboard .position');
+  draggableShips.forEach(ship => {
+    ship.addEventListener('dragstart', DOMLogic.dragStart);
+    ship.addEventListener('dragend', DOMLogic.dragEnd);
+  })
+
+  playerGameboardPositions.forEach(position => {
+    position.addEventListener('dragenter', DOMLogic.dragEnter);
+    position.addEventListener('dragover', DOMLogic.dragOver);
+    position.addEventListener('dragleave', DOMLogic.dragLeave);
+    position.addEventListener('drop', DOMLogic.dragDrop);
+  });
   // player.placeShipRandomly(4);
   // player.placeShipRandomly(3);
   // player.placeShipRandomly(3);
@@ -20,7 +34,7 @@ function initiateGame() {
   // player.placeShipRandomly(1);
   // player.placeShipRandomly(1);
   // player.placeShipRandomly(1);
-  DOMLogic.renderPlayerGameboard(player);
+  
   // computer = Computer();
   // computer.placeShipRandomly(4);
   // computer.placeShipRandomly(3);

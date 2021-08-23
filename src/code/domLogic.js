@@ -5,6 +5,7 @@ const DOMLogic = (function () {
   let gameStatus = document.querySelector('.game-status');
   let playerInGame;
   let computerInGame;
+  let currentShipDragged;
 
   const populateShips = () => {
     const shipLengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
@@ -14,8 +15,10 @@ const DOMLogic = (function () {
           let shipPosition = document.createElement('div');
           shipPosition.classList.add('position', 'ship');
           ship.appendChild(shipPosition);
-          ship.draggable = true;
         }
+        ship.draggable = true;
+        ship.classList.add('ship_drag');
+        ship.dataset.length = shipLength;
         shipsContainer.appendChild(ship);
     });
   };
@@ -105,8 +108,8 @@ const DOMLogic = (function () {
     if (!parentClassList.contains('active')) {
       return;
     }
-    let x = e.target.dataset.x;
-    let y = e.target.dataset.y;
+    let x = Number(e.target.dataset.x);
+    let y = Number(e.target.dataset.y);
 
     if (playerInGame.attack(x, y)) {
       computerInGame.getGameboard().receiveAttack(x, y);
@@ -120,12 +123,65 @@ const DOMLogic = (function () {
       }
     }
   };
+
+  const dragStart = (e) => {
+    e.target.classList.toggle('hold');
+    setTimeout(() => e.target.classList.toggle('invisible'), 0);
+    currentShipDragged = e.target;
+  };
+
+  const dragEnd = (e) => {
+    e.target.classList.toggle('hold');
+    e.target.classList.toggle('invisible');
+  };
+
+  const dragEnter = (e) => {
+    e.preventDefault();
+    e.target.classList.toggle('hovered');
+  };
+
+  const dragOver = (e) => {
+    e.preventDefault();
+  };
+  
+  const dragLeave = (e) => {
+    e.target.classList.toggle('hovered');
+  };
+
+  const dragDrop = (e) => {
+    e.target.classList.toggle('hovered');
+    let x = Number(e.target.dataset.x);
+    let y = Number(e.target.dataset.y);
+    let shipLength = Number(currentShipDragged.dataset.length);
+    let isValidShipPlacement = playerInGame.getGameboard().placeShip(x, y, shipLength, 'horizontal');
+    if (isValidShipPlacement) {
+      renderPlayerGameboard(playerInGame);
+      let playerGameboardPositions = document.querySelectorAll('.player_gameboard .position');
+      playerGameboardPositions.forEach(position => {
+        position.addEventListener('dragenter', DOMLogic.dragEnter);
+        position.addEventListener('dragover', DOMLogic.dragOver);
+        position.addEventListener('dragleave', DOMLogic.dragLeave);
+        position.addEventListener('drop', DOMLogic.dragDrop);
+      });
+      shipsContainer.removeChild(currentShipDragged);
+      let draggableShips = document.querySelectorAll('.ship_drag');
+      console.log(draggableShips.length);
+    }
+
+  };
+
   return {
     renderPlayerGameboard,
     renderComputerGameboard,
     handlePlayerAttack,
     toggleActiveComputerGameboard,
     populateShips,
+    dragStart,
+    dragEnd,
+    dragEnter,
+    dragOver,
+    dragLeave,
+    dragDrop,
   };
 })();
 

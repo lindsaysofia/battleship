@@ -14,9 +14,9 @@ const Gameboard = () => {
       yStart < 0 ||
       yEnd < 0 ||
       xStart >= gameboardSize ||
-      xEnd >= gameboardSize ||
+      xEnd > gameboardSize ||
       yStart >= gameboardSize ||
-      yEnd >= gameboardSize
+      yEnd > gameboardSize
     ) {
       return false;
     }

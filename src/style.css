@@ -80,8 +80,21 @@ h3 {
   width: 400px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.ship_drag {
+  cursor: pointer;
 }
 
 .ships-container .position {
   display: inline-block;
+}
+
+.hold {
+  border: 2px solid var(--color-red);
+}
+
+.hovered {
+  border-style: dashed;
 }
