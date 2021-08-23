@@ -1,4 +1,6 @@
 const DOMLogic = (function () {
+  const game = document.querySelector('.game');
+  const computer = document.querySelector('.computer');
   const playerGameboard = document.querySelector('.player_gameboard');
   const computerGameboard = document.querySelector('.computer_gameboard');
   const shipsContainer = document.querySelector('.ships-container');
@@ -70,6 +72,13 @@ const DOMLogic = (function () {
     }
   };
 
+  const initiateComputerGameboard = (computer) => {
+    const shipLengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+    shipLengths.forEach((shipLength) => {
+      computer.placeShipRandomly(shipLength);
+    });
+  }
+
   const toggleActiveComputerGameboard = () => {
     computerGameboard.classList.toggle('active');
   };
@@ -82,7 +91,6 @@ const DOMLogic = (function () {
     ship.classList.toggle('vertical');
     let currentOrientation = ship.dataset.orientation;
     ship.dataset.orientation = (currentOrientation === 'horizontal') ? 'vertical' : 'horizontal';
-    console.log(ship);
   }
 
   const isGameOver = () => {
@@ -178,7 +186,13 @@ const DOMLogic = (function () {
       });
       shipsContainer.removeChild(currentShipDragged);
       let draggableShips = document.querySelectorAll('.ship_drag');
-      console.log(draggableShips.length);
+      if (draggableShips.length === 0) {
+        game.removeChild(shipsContainer);
+        computer.classList.remove('hidden');
+        initiateComputerGameboard(computerInGame);
+        renderComputerGameboard(computerInGame);
+        gameStatus.textContent = 'Player, start!';
+      }
     }
 
   };

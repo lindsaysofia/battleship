@@ -25,35 +25,13 @@ function initiateGame() {
     position.addEventListener('dragleave', DOMLogic.dragLeave);
     position.addEventListener('drop', DOMLogic.dragDrop);
   });
-  // player.placeShipRandomly(4);
-  // player.placeShipRandomly(3);
-  // player.placeShipRandomly(3);
-  // player.placeShipRandomly(2);
-  // player.placeShipRandomly(2);
-  // player.placeShipRandomly(2);
-  // player.placeShipRandomly(1);
-  // player.placeShipRandomly(1);
-  // player.placeShipRandomly(1);
-  // player.placeShipRandomly(1);
   
-  // computer = Computer();
-  // computer.placeShipRandomly(4);
-  // computer.placeShipRandomly(3);
-  // computer.placeShipRandomly(3);
-  // computer.placeShipRandomly(2);
-  // computer.placeShipRandomly(2);
-  // computer.placeShipRandomly(2);
-  // computer.placeShipRandomly(1);
-  // computer.placeShipRandomly(1);
-  // computer.placeShipRandomly(1);
-  // computer.placeShipRandomly(1);
-  // DOMLogic.renderComputerGameboard(computer);
-
-  // DOMLogic.toggleActiveComputerGameboard();
+  computer = Computer();
+  DOMLogic.renderComputerGameboard(computer);
+  DOMLogic.toggleActiveComputerGameboard();
+  document
+  .querySelector('.computer_gameboard')
+  .addEventListener('click', DOMLogic.handlePlayerAttack);
 }
 
 initiateGame();
-
-// document
-//   .querySelector('.computer_gameboard')
-//   .addEventListener('click', DOMLogic.handlePlayerAttack);

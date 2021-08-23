@@ -36,7 +36,7 @@ h3 {
 .game {
   display: grid;
   grid-template-columns: 50% 50%;
-  gap: 1em;
+  gap: 3em;
 }
 
 .player_gameboard,
@@ -88,7 +88,7 @@ h3 {
 
 .ship_drag {
   cursor: pointer;
-  margin: .5em;
+  margin: .25em;
 }
 
 .ships-container .position {
