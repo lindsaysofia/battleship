@@ -19,6 +19,7 @@ const DOMLogic = (function () {
         ship.draggable = true;
         ship.classList.add('ship_drag');
         ship.dataset.length = shipLength;
+        ship.dataset.orientation = 'horizontal';
         shipsContainer.appendChild(ship);
     });
   };
@@ -72,6 +73,17 @@ const DOMLogic = (function () {
   const toggleActiveComputerGameboard = () => {
     computerGameboard.classList.toggle('active');
   };
+
+  const toggleOrientation = (e) => {
+    let ship = e.target.parentNode;
+    if (!ship.classList.contains('ship_drag')) {
+      return;
+    }
+    ship.classList.toggle('vertical');
+    let currentOrientation = ship.dataset.orientation;
+    ship.dataset.orientation = (currentOrientation === 'horizontal') ? 'vertical' : 'horizontal';
+    console.log(ship);
+  }
 
   const isGameOver = () => {
     if (
@@ -153,7 +165,8 @@ const DOMLogic = (function () {
     let x = Number(e.target.dataset.x);
     let y = Number(e.target.dataset.y);
     let shipLength = Number(currentShipDragged.dataset.length);
-    let isValidShipPlacement = playerInGame.getGameboard().placeShip(x, y, shipLength, 'horizontal');
+    let orientation = currentShipDragged.dataset.orientation;
+    let isValidShipPlacement = playerInGame.getGameboard().placeShip(x, y, shipLength, orientation);
     if (isValidShipPlacement) {
       renderPlayerGameboard(playerInGame);
       let playerGameboardPositions = document.querySelectorAll('.player_gameboard .position');
@@ -175,6 +188,7 @@ const DOMLogic = (function () {
     renderComputerGameboard,
     handlePlayerAttack,
     toggleActiveComputerGameboard,
+    toggleOrientation,
     populateShips,
     dragStart,
     dragEnd,

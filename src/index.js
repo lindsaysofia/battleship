@@ -16,6 +16,7 @@ function initiateGame() {
   draggableShips.forEach(ship => {
     ship.addEventListener('dragstart', DOMLogic.dragStart);
     ship.addEventListener('dragend', DOMLogic.dragEnd);
+    ship.addEventListener('dblclick', DOMLogic.toggleOrientation);
   })
 
   playerGameboardPositions.forEach(position => {
