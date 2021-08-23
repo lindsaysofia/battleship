@@ -83,6 +83,10 @@ const DOMLogic = (function () {
     computerGameboard.classList.toggle('active');
   };
 
+  const startGame = () => {
+    console.log('start');
+  };
+
   const toggleOrientation = (e) => {
     let ship = e.target.parentNode;
     if (!ship.classList.contains('ship_drag')) {
@@ -91,7 +95,14 @@ const DOMLogic = (function () {
     ship.classList.toggle('vertical');
     let currentOrientation = ship.dataset.orientation;
     ship.dataset.orientation = (currentOrientation === 'horizontal') ? 'vertical' : 'horizontal';
-  }
+  };
+
+  const createNewGameButton = () => {
+    let button = document.createElement('button');
+    button.textContent = 'New Game';
+    button.addEventListener('click', startGame);
+    game.appendChild(button);
+  };
 
   const isGameOver = () => {
     if (
@@ -108,6 +119,8 @@ const DOMLogic = (function () {
     gameStatus.textContent = playerInGame.getGameboard().allShipsSunk()
       ? 'Computer Won!'
       : 'Player Won!';
+      game.innerHTML = '';
+    createNewGameButton();
   };
 
   const handleComputerAttack = () => {
@@ -210,6 +223,7 @@ const DOMLogic = (function () {
     dragOver,
     dragLeave,
     dragDrop,
+    createNewGameButton,
   };
 })();
 
