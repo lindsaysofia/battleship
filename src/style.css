@@ -101,7 +101,7 @@ button {
 }
 
 .hovered {
-  border-style: dashed;
+  background-color: var(--color-white);
 }
 
 .vertical {
@@ -118,4 +118,5 @@ button {
   text-transform: uppercase;
   grid-column: 1 / 3;
   justify-self: center;
+  cursor: pointer;
 }

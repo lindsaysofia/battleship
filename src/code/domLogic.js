@@ -1,9 +1,12 @@
+import Player from './player';
+import Computer from './computer';
+
 const DOMLogic = (function () {
   const game = document.querySelector('.game');
-  const computer = document.querySelector('.computer');
-  const playerGameboard = document.querySelector('.player_gameboard');
-  const computerGameboard = document.querySelector('.computer_gameboard');
-  const shipsContainer = document.querySelector('.ships-container');
+  let computer;
+  let playerGameboard;
+  let computerGameboard;
+  let shipsContainer;
   let gameStatus = document.querySelector('.game-status');
   let playerInGame;
   let computerInGame;
@@ -12,17 +15,17 @@ const DOMLogic = (function () {
   const populateShips = () => {
     const shipLengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
     shipLengths.forEach((shipLength) => {
-        let ship = document.createElement('div');
-        for (let i = 0; i < shipLength; i++) {
-          let shipPosition = document.createElement('div');
-          shipPosition.classList.add('position', 'ship');
-          ship.appendChild(shipPosition);
-        }
-        ship.draggable = true;
-        ship.classList.add('ship_drag');
-        ship.dataset.length = shipLength;
-        ship.dataset.orientation = 'horizontal';
-        shipsContainer.appendChild(ship);
+      let ship = document.createElement('div');
+      for (let i = 0; i < shipLength; i++) {
+        let shipPosition = document.createElement('div');
+        shipPosition.classList.add('position', 'ship');
+        ship.appendChild(shipPosition);
+      }
+      ship.draggable = true;
+      ship.classList.add('ship_drag');
+      ship.dataset.length = shipLength;
+      ship.dataset.orientation = 'horizontal';
+      shipsContainer.appendChild(ship);
     });
   };
 
@@ -77,14 +80,10 @@ const DOMLogic = (function () {
     shipLengths.forEach((shipLength) => {
       computer.placeShipRandomly(shipLength);
     });
-  }
+  };
 
   const toggleActiveComputerGameboard = () => {
     computerGameboard.classList.toggle('active');
-  };
-
-  const startGame = () => {
-    console.log('start');
   };
 
   const toggleOrientation = (e) => {
@@ -94,7 +93,8 @@ const DOMLogic = (function () {
     }
     ship.classList.toggle('vertical');
     let currentOrientation = ship.dataset.orientation;
-    ship.dataset.orientation = (currentOrientation === 'horizontal') ? 'vertical' : 'horizontal';
+    ship.dataset.orientation =
+      currentOrientation === 'horizontal' ? 'vertical' : 'horizontal';
   };
 
   const createNewGameButton = () => {
@@ -119,8 +119,10 @@ const DOMLogic = (function () {
     gameStatus.textContent = playerInGame.getGameboard().allShipsSunk()
       ? 'Computer Won!'
       : 'Player Won!';
+    setTimeout(() => {
       game.innerHTML = '';
-    createNewGameButton();
+      createNewGameButton();
+    }, 5000);
   };
 
   const handleComputerAttack = () => {
@@ -152,7 +154,9 @@ const DOMLogic = (function () {
       if (isGameOver()) {
         handleGameEnd();
       } else {
-        handleComputerAttack();
+        setTimeout(() => {
+          handleComputerAttack();
+        }, 1000);
       }
     }
   };
@@ -176,28 +180,36 @@ const DOMLogic = (function () {
   const dragOver = (e) => {
     e.preventDefault();
   };
-  
+
   const dragLeave = (e) => {
     e.target.classList.toggle('hovered');
   };
 
   const dragDrop = (e) => {
     e.target.classList.toggle('hovered');
+    if (currentShipDragged === '') {
+      return;
+    }
     let x = Number(e.target.dataset.x);
     let y = Number(e.target.dataset.y);
     let shipLength = Number(currentShipDragged.dataset.length);
     let orientation = currentShipDragged.dataset.orientation;
-    let isValidShipPlacement = playerInGame.getGameboard().placeShip(x, y, shipLength, orientation);
+    let isValidShipPlacement = playerInGame
+      .getGameboard()
+      .placeShip(x, y, shipLength, orientation);
     if (isValidShipPlacement) {
       renderPlayerGameboard(playerInGame);
-      let playerGameboardPositions = document.querySelectorAll('.player_gameboard .position');
-      playerGameboardPositions.forEach(position => {
-        position.addEventListener('dragenter', DOMLogic.dragEnter);
-        position.addEventListener('dragover', DOMLogic.dragOver);
-        position.addEventListener('dragleave', DOMLogic.dragLeave);
-        position.addEventListener('drop', DOMLogic.dragDrop);
+      let playerGameboardPositions = document.querySelectorAll(
+        '.player_gameboard .position'
+      );
+      playerGameboardPositions.forEach((position) => {
+        position.addEventListener('dragenter', dragEnter);
+        position.addEventListener('dragover', dragOver);
+        position.addEventListener('dragleave', dragLeave);
+        position.addEventListener('drop', dragDrop);
       });
       shipsContainer.removeChild(currentShipDragged);
+      currentShipDragged = '';
       let draggableShips = document.querySelectorAll('.ship_drag');
       if (draggableShips.length === 0) {
         game.removeChild(shipsContainer);
@@ -207,23 +219,55 @@ const DOMLogic = (function () {
         gameStatus.textContent = 'Player, start!';
       }
     }
+  };
 
+  const startGame = () => {
+    game.innerHTML = `
+    <div class="player">
+      <h3>Friendly Waters</h3>
+      <div class="player_gameboard"></div>
+    </div>
+    <div class="ships-container">
+    </div>
+    <div class="computer hidden">
+      <h3>Enemy Waters</h3>
+      <div class="computer_gameboard"></div>
+    </div>`;
+    computer = document.querySelector('.computer');
+    playerGameboard = document.querySelector('.player_gameboard');
+    computerGameboard = document.querySelector('.computer_gameboard');
+    shipsContainer = document.querySelector('.ships-container');
+    populateShips();
+    playerInGame = Player('Player');
+    renderPlayerGameboard(playerInGame);
+
+    let draggableShips = document.querySelectorAll('.ship_drag');
+    let playerGameboardPositions = document.querySelectorAll(
+      '.player_gameboard .position'
+    );
+    draggableShips.forEach((ship) => {
+      ship.addEventListener('dragstart', dragStart);
+      ship.addEventListener('dragend', dragEnd);
+      ship.addEventListener('dblclick', toggleOrientation);
+    });
+
+    playerGameboardPositions.forEach((position) => {
+      position.addEventListener('dragenter', dragEnter);
+      position.addEventListener('dragover', dragOver);
+      position.addEventListener('dragleave', dragLeave);
+      position.addEventListener('drop', dragDrop);
+    });
+
+    computerInGame = Computer();
+    renderComputerGameboard(computerInGame);
+    toggleActiveComputerGameboard();
+    document
+      .querySelector('.computer_gameboard')
+      .addEventListener('click', handlePlayerAttack);
   };
 
   return {
-    renderPlayerGameboard,
-    renderComputerGameboard,
-    handlePlayerAttack,
-    toggleActiveComputerGameboard,
-    toggleOrientation,
-    populateShips,
-    dragStart,
-    dragEnd,
-    dragEnter,
-    dragOver,
-    dragLeave,
-    dragDrop,
-    createNewGameButton,
+    startGame,
   };
 })();
 
