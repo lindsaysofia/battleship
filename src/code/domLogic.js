@@ -104,6 +104,46 @@ const DOMLogic = (function () {
     game.appendChild(button);
   };
 
+  const createLegend = () => {
+    let missLegend = document.createElement('div');
+    missLegend.classList.add('legend_miss');
+    let missLegendColor = document.createElement('div');
+    missLegendColor.classList.add('position', 'miss');
+    let missLegendText = document.createElement('p');
+    missLegendText.textContent = 'Miss';
+
+    missLegend.appendChild(missLegendColor);
+    missLegend.appendChild(missLegendText);
+
+    let hitLegend = document.createElement('div');
+    hitLegend.classList.add('legend_hit');
+    let hitLegendColor = document.createElement('div');
+    hitLegendColor.classList.add('position', 'hit');
+    let hitLegendText = document.createElement('p');
+    hitLegendText.textContent = 'Hit';
+
+    hitLegend.appendChild(hitLegendColor);
+    hitLegend.appendChild(hitLegendText);
+
+    game.appendChild(missLegend);
+    game.appendChild(hitLegend);
+  }
+
+  const createConfetti = () => {
+    for (let i = 0; i < 50; i++) {
+      let confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      document.body.insertBefore(confetti, document.body.firstChild);
+    }
+  };
+
+  const removeConfetti = () => {
+    const confetti = document.querySelectorAll('.confetti');
+    confetti.forEach((confettiPiece) => {
+      document.body.removeChild(confettiPiece);
+    });
+  };
+
   const isGameOver = () => {
     if (
       playerInGame.getGameboard().allShipsSunk() ||
@@ -119,6 +159,7 @@ const DOMLogic = (function () {
     gameStatus.textContent = playerInGame.getGameboard().allShipsSunk()
       ? 'Computer Won!'
       : 'Player Won!';
+    createConfetti();
     setTimeout(() => {
       game.innerHTML = '';
       createNewGameButton();
@@ -156,7 +197,7 @@ const DOMLogic = (function () {
       } else {
         setTimeout(() => {
           handleComputerAttack();
-        }, 1000);
+        }, 500);
       }
     }
   };
@@ -216,18 +257,21 @@ const DOMLogic = (function () {
         computer.classList.remove('hidden');
         initiateComputerGameboard(computerInGame);
         renderComputerGameboard(computerInGame);
+        createLegend();
         gameStatus.textContent = 'Player, start!';
       }
     }
   };
 
   const startGame = () => {
+    removeConfetti();
     game.innerHTML = `
     <div class="player">
       <h3>Friendly Waters</h3>
       <div class="player_gameboard"></div>
     </div>
     <div class="ships-container">
+      <p>Double-click to change the orientation :)</p>
     </div>
     <div class="computer hidden">
       <h3>Enemy Waters</h3>
@@ -237,6 +281,7 @@ const DOMLogic = (function () {
     playerGameboard = document.querySelector('.player_gameboard');
     computerGameboard = document.querySelector('.computer_gameboard');
     shipsContainer = document.querySelector('.ships-container');
+    gameStatus.textContent = 'Player, place your ships!'
     populateShips();
     playerInGame = Player('Player');
     renderPlayerGameboard(playerInGame);
