@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const Ship = require('../code/ship');
+import Ship from '../code/ship';
 
 // testing "hit" function
 const shipOfLength3 = Ship(3);

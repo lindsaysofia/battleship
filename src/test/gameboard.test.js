@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const Gameboard = require('../code/gameboard');
+import Gameboard from '../code/gameboard';
 
 const gameboard = Gameboard();
 const gameboardSize = 10;
